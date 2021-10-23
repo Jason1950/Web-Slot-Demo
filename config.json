@@ -1,0 +1,13 @@
+
+
+{
+  "port": 8030,
+  "files": ["./*.{html,htm,css,js}"],
+  "server": { "baseDir": "./" },
+  "startPath": "/index.html" ,
+  
+  "ui": {
+    "port": 8031
+  }
+}
+
