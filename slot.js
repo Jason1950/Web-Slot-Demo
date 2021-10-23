@@ -8,12 +8,16 @@
 *
 * Date: May 23, 2011 
 */
+
+let a,b,c;
+let completed = 0
+let win;
 $(document).ready(function() {
     /**
     * Global variables
     */
-    var completed = 0,
-        imgHeight = 1374,
+    // var completed = 0,
+    var    imgHeight = 1374,
         posArr = [
             0, //orange
             80, //number 7 
@@ -35,7 +39,7 @@ $(document).ready(function() {
             1298 //cherry
         ];
     
-    var win = [];
+    win = [];
     win[0] = win[454] = win[913] = 1;
     win[80] = win[539] = win[1000] = 2;
     win[165] = win[624] = win[1085] = 3;
@@ -162,72 +166,160 @@ $(document).ready(function() {
         $('#result').html('');
     };
 
-    function enableControl() {
-        $('#control').attr("disabled", false);
-    }
 
-    function disableControl() {
-        $('#control').attr("disabled", true);
-    }
-
-    function printResult() {
-        var res;
-        if(win[a.pos] === win[b.pos] && win[a.pos] === win[c.pos]) {
-            res = "You Win!";
-        } else {
-            res = "You Lose";
-        }
-        $('#result').html(res);
-    }
 
     //create slot objects
-    var a = new Slot('#slot1', 30, 1),
-        b = new Slot('#slot2', 45, 2),
-        c = new Slot('#slot3', 70, 3);
+    a = new Slot('#slot1', 30, 1);
+    b = new Slot('#slot2', 45, 2);
+    c = new Slot('#slot3', 70, 3);
 
     /**
     * Slot machine controller
     */
     $('#control').click(function() {
-        var x;
+        // let x;
         if(this.innerHTML == "Start") {
-            a.start();
-            b.start();
-            c.start();
-            this.innerHTML = "Stop";
-            
-            disableControl(); //disable control until the slots reach max speed
-            
-            //check every 100ms if slots have reached max speed 
-            //if so, enable the control
-            x = window.setInterval(function() {
-                if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
-                    enableControl();
-                    window.clearInterval(x);
-                }
-            }, 100);
-        } else if(this.innerHTML == "Stop") {
-            a.stop();
-            b.stop();
-            c.stop();
-            this.innerHTML = "Reset";
-
-            disableControl(); //disable control until the slots stop
-            
-            //check every 100ms if slots have stopped
-            //if so, enable the control
-            x = window.setInterval(function() {
-                if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
-                    enableControl();
-                    window.clearInterval(x);
-                    printResult();
-                }
-            }, 100);
-        } else { //reset
-            a.reset();
-            b.reset();
-            c.reset();
-            this.innerHTML = "Start";
+            slotStart();
         }
+        // alert('button click');
+        // if(this.innerHTML == "Start") {
+        //     a.start();
+        //     b.start();
+        //     c.start();
+        //     this.innerHTML = "Stop";
+            
+        //     disableControl(); //disable control until the slots reach max speed
+            
+        //     //check every 100ms if slots have reached max speed 
+        //     //if so, enable the control
+        //     x = window.setInterval(function() {
+        //         if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
+        //             enableControl();
+        //             window.clearInterval(x);
+        //         }
+        //     }, 100);
+
+        //     setTimeout((()=>{
+        //         a.stop();
+        //         b.stop();
+        //         c.stop();
+        //         // disableControl();
+        //         this.innerHTML = "Start";
+
+        //         x = window.setInterval(function() {
+        //             if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
+        //                 enableControl();
+        //                 window.clearInterval(x);
+        //                 printResult();
+        //             }
+        //         }, 100);
+
+        //     }),1500);
+
+        // } 
+        // else if(this.innerHTML == "Stop") {
+        //     a.stop();
+        //     b.stop();
+        //     c.stop();
+        //     this.innerHTML = "Reset";
+
+        //     disableControl(); //disable control until the slots stop
+            
+        //     //check every 100ms if slots have stopped
+        //     //if so, enable the control
+        //     x = window.setInterval(function() {
+        //         if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
+        //             enableControl();
+        //             window.clearInterval(x);
+        //             printResult();
+        //         }
+        //     }, 100);
+        // } else { //reset
+        //     a.reset();
+        //     b.reset();
+        //     c.reset();
+        //     this.innerHTML = "Start";
+        // }
     });
 });
+
+function enableControl() {
+    // alert('button enable ok!');
+    $('#control').attr("disabled", false);
+}
+
+function disableControl() {
+    // alert('button disenable ok!');
+    $('#control').attr("disabled", true);
+}
+
+function printResult() {
+    var res;
+    if(win[a.pos] === win[b.pos] && win[a.pos] === win[c.pos]) {
+        res = "You Win!";
+    } else {
+        res = "You Lose";
+    }
+    $('#result').html(res);
+}
+
+
+window.onload = function() {
+    // alert('Shake js ok!');
+    //create a new instance of shake.js.
+    var myShakeEvent = new Shake({
+        threshold: 14
+    });
+
+    // start listening to device motion
+    myShakeEvent.start();
+
+    // register a shake event
+    window.addEventListener('shake', shakeEventDidOccur, false);
+
+    //shake event callback
+    function shakeEventDidOccur () {
+        //put your own code here etc.
+        // alert('Shake!');
+        slotStart();
+
+        // die
+
+        }
+};
+
+function slotStart(){
+    let x;
+    a.start();
+    b.start();
+    c.start();
+    this.innerHTML = "Stop";
+    
+    disableControl(); //disable control until the slots reach max speed
+    
+    //check every 100ms if slots have reached max speed 
+    //if so, enable the control
+    x = window.setInterval(function() {
+        if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
+            enableControl();
+            window.clearInterval(x);
+        }
+    }, 100);
+
+    setTimeout((()=>{
+        a.stop();
+        b.stop();
+        c.stop();
+        // disableControl();
+        this.innerHTML = "Start";
+
+        x = window.setInterval(function() {
+            if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
+                enableControl();
+                window.clearInterval(x);
+                printResult();
+            }
+        }, 100);
+
+    }),1500);
+}
