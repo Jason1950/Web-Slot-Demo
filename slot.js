@@ -12,11 +12,19 @@
 let a,b,c;
 let completed = 0
 let win;
+let innerButtonText ;
 $(document).ready(function() {
     /**
     * Global variables
     */
     // var completed = 0,
+    
+    // let buttonTextJS = 
+    // $("#control").html("Input New Text");
+    // $("#j2").html('ref');
+    document.getElementById("control").innnerHTML = 'wedwed'
+    console.log($("#control").prop('value'));
+    console.log('first', $('#control').innnerHTML );
     var    imgHeight = 1374,
         posArr = [
             0, //orange
@@ -178,6 +186,8 @@ $(document).ready(function() {
     */
     $('#control').click(function() {
         // let x;
+        console.log( 'click $ :', $('#control'));
+        console.log( this.innerHTML);
         if(this.innerHTML == "Start") {
             slotStart();
         }
@@ -241,7 +251,7 @@ $(document).ready(function() {
         //     this.innerHTML = "Start";
         // }
     });
-});
+
 
 function enableControl() {
     // alert('button enable ok!');
@@ -263,6 +273,53 @@ function printResult() {
     $('#result').html(res);
 }
 
+function slotStart(){
+    let x;
+    a.start();
+    b.start();
+    c.start();
+    $("#control").html('Stop');
+    // this.innerHTML = "Stop";
+    // $('#control').html = "Stop";
+    // $("#control").attr("value", "Button Text");
+    // let controlText = $('#control')
+    // console.log(this);
+    // console.log('$: ',controlText.value);
+    // $("#control").prop('value', 'Save');
+    // console.log(document.this);
+    // console.log(document);
+    // $("#control").prop("value", "Input New Text");
+    // $("#j2").prop("value", "Input New Text");
+    $("#j2").html('rewedfweff');
+    disableControl(); //disable control until the slots reach max speed
+    
+    //check every 100ms if slots have reached max speed 
+    //if so, enable the control
+    x = window.setInterval(function() {
+        if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
+            enableControl();
+            window.clearInterval(x);
+        }
+    }, 100);
+
+    setTimeout((()=>{
+        a.stop();
+        b.stop();
+        c.stop();
+        // disableControl();
+        // this.innerHTML = "Start55";
+        $("#control").html('Start');
+        enableControl();
+        x = window.setInterval(function() {
+            if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
+                enableControl();
+                window.clearInterval(x);
+                printResult();
+            }
+        }, 100);
+
+    }),1500);
+}
 
 window.onload = function() {
     // alert('Shake js ok!');
@@ -288,38 +345,6 @@ window.onload = function() {
         }
 };
 
-function slotStart(){
-    let x;
-    a.start();
-    b.start();
-    c.start();
-    this.innerHTML = "Stop";
-    
-    disableControl(); //disable control until the slots reach max speed
-    
-    //check every 100ms if slots have reached max speed 
-    //if so, enable the control
-    x = window.setInterval(function() {
-        if(a.speed >= a.maxSpeed && b.speed >= b.maxSpeed && c.speed >= c.maxSpeed) {
-            enableControl();
-            window.clearInterval(x);
-        }
-    }, 100);
 
-    setTimeout((()=>{
-        a.stop();
-        b.stop();
-        c.stop();
-        // disableControl();
-        this.innerHTML = "Start";
 
-        x = window.setInterval(function() {
-            if(a.speed === 0 && b.speed === 0 && c.speed === 0 && completed === 3) {
-                enableControl();
-                window.clearInterval(x);
-                printResult();
-            }
-        }, 100);
-
-    }),1500);
-}
+});
