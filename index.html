@@ -84,6 +84,8 @@ button {
 		</div>
 		<div id="result"></div>
 		<div><button id="control">Start</button></div>
+	<div><button id="ioscheck" onclick="iosCheckButton()">IOS Shake</button></div>
+
 	</div>
 	<div><a href="http://odhyan.com/blog/2011/05/slot-machine-in-javascript/">Learn how to build this</a></div>
 	<div class="credits">
@@ -91,9 +93,20 @@ button {
 		<div class="browsers">Tested in Firefox, Chrome and IE8</div>
 	</div>
 	<div id="j2">564</div>
+
 </div>
 </body>
 <script type="text/javascript" src="./shake-iospermission.js"></script>
 <script type="text/javascript" src="./shake.js"></script>
 <script src="slot.js"></script>
+<script >
+	function iosCheckButton (){
+        ios13granted();   
+		let elems = document.getElementById('ioscheck');
+		elems.style.display = 'none';
+		// this.style.display = 'block';
+    }
+	// ​$('#ioscheck').css('display'​​​​​​​​​​​​​​​​​​​​​​​​​​​,'none');​​​​​​
+
+</script>
 </html>

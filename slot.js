@@ -318,7 +318,7 @@ function slotStart(){
             }
         }, 100);
 
-    }),1500);
+    }),2500);
 }
 
 window.onload = function() {
